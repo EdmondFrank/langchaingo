@@ -73,6 +73,22 @@ type CallOptions struct {
 	// WebSearchOptions configures web search behavior for models that support it.
 	// Currently supported by OpenAI models like gpt-4o-search-preview.
 	WebSearchOptions *WebSearchOptions `json:"web_search_options,omitempty"`
+
+	// LogitBias allows setting the logit bias for token generation.
+	LogitBias []interface{} `json:"logit_bias,omitempty"` // Assuming array of unknown structure, adjust as needed
+
+	// Params is a map of additional parameters to include in the request.
+	// The meaning of this field is specific to the backend in use.
+	Params map[string]interface{} `json:"params,omitempty"`
+
+	// LogProbs indicates whether to return log probabilities of the output tokens.
+	LogProbs bool `json:"logprobs,omitempty"`
+
+	// TopLogProbs specifies the number of top log probabilities to return.
+	TopLogProbs int `json:"top_logprobs,omitempty"`
+
+	// User is the user identifier to include in the request.
+	User string `json:"user,omitempty"`
 }
 
 // Tool is a tool that can be used by the model.
@@ -329,6 +345,7 @@ func WithResponseMIMEType(responseMIMEType string) CallOption {
 	}
 }
 
+<<<<<<< HEAD
 // WithWebSearch enables web search for models that support it.
 // Use with OpenAI models like gpt-4o-search-preview and gpt-4o-mini-search-preview.
 // Pass nil for default web search behavior, or provide WebSearchOptions to customize.
@@ -339,5 +356,34 @@ func WithWebSearch(options *WebSearchOptions) CallOption {
 		} else {
 			o.WebSearchOptions = options
 		}
+=======
+func WithParams(params map[string]interface{}) CallOption {
+	return func(o *CallOptions) {
+		o.Params = params
+	}
+}
+
+func WithLogitBias(logitBias []interface{})  CallOption {
+	return func(o *CallOptions) {
+		o.LogitBias = logitBias
+	}
+}
+
+func WithLogProbs(logProbs bool)  CallOption {
+	return func(o *CallOptions) {
+		o.LogProbs = logProbs
+	}
+}
+
+func WithTopLogProbs(topLogProbs int)  CallOption {
+	return func(o *CallOptions) {
+		o.TopLogProbs = topLogProbs
+	}
+}
+
+func WithUser(user string)  CallOption {
+	return func(o *CallOptions) {
+		o.User = user
+>>>>>>> 6ca7e6bd (Added more llm options.)
 	}
 }
