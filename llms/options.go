@@ -69,6 +69,19 @@ type CallOptions struct {
 	// Supported MIME types are: text/plain: (default) Text output.
 	// application/json: JSON response in the response candidates.
 	ResponseMIMEType string `json:"response_mime_type,omitempty"`
+
+	LogitBias        []interface{}  `json:"logit_bias,omitempty"` // Assuming array of unknown structure, adjust as needed
+
+	// Params is a map of metadata to include in the request.
+	// The meaning of this field is specific to the backend in use.
+	Params map[string]interface{} `json:"params,omitempty"`
+
+	LogProbs bool `json:"logprobs,omitempty"`
+
+	TopLogProbs int `json:"top_logprobs,omitempty"`
+
+	// User is the user to include in the request.
+	User string `json:"params,omitempty"`
 }
 
 // Tool is a tool that can be used by the model.
@@ -288,5 +301,35 @@ func WithMetadata(metadata map[string]interface{}) CallOption {
 func WithResponseMIMEType(responseMIMEType string) CallOption {
 	return func(o *CallOptions) {
 		o.ResponseMIMEType = responseMIMEType
+	}
+}
+
+func WithParams(params map[string]interface{}) CallOption {
+	return func(o *CallOptions) {
+		o.Params = params
+	}
+}
+
+func WithLogitBias(logitBias []interface{})  CallOption {
+	return func(o *CallOptions) {
+		o.LogitBias = logitBias
+	}
+}
+
+func WithLogProbs(logProbs bool)  CallOption {
+	return func(o *CallOptions) {
+		o.LogProbs = logProbs
+	}
+}
+
+func WithTopLogProbs(topLogProbs int)  CallOption {
+	return func(o *CallOptions) {
+		o.TopLogProbs = topLogProbs
+	}
+}
+
+func WithUser(user string)  CallOption {
+	return func(o *CallOptions) {
+		o.User = user
 	}
 }
