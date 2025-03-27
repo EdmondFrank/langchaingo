@@ -114,6 +114,8 @@ type ToolCallResponse struct {
 	Name string `json:"name"`
 	// Content is the textual content of the response.
 	Content string `json:"content"`
+
+	IsError bool `json:"is_error"`
 }
 
 func (ToolCallResponse) isPart() {}
