@@ -293,10 +293,15 @@ func (tc *ToolCallResponse) UnmarshalJSON(data []byte) error {
 	if !ok {
 		return fmt.Errorf("invalid name field in ToolCallResponse")
 	}
+	isError, ok := m["is_error"].(bool)
+	if !ok {
+		return fmt.Errorf("invalid is_error field in ToolCallResponse")
+	}
 	content, ok := tr["content"].(string)
 	if !ok {
 		return fmt.Errorf("invalid content field in ToolCallResponse")
 	}
+	tc.IsError = isError
 	tc.ToolCallID = toolCallID
 	tc.Name = name
 	tc.Content = content
