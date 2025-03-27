@@ -258,9 +258,11 @@ func (tc *ToolCall) UnmarshalJSON(data []byte) error {
 
 func (tc ToolCallResponse) MarshalJSON() ([]byte, error) {
 	m := struct {
+		IsError      bool              `json:"is_error"`
 		Type         string            `json:"type"`
 		ToolResponse map[string]string `json:"tool_response"`
 	}{
+		IsError: tc.IsError,
 		Type: "tool_response",
 		ToolResponse: map[string]string{
 			"tool_call_id": tc.ToolCallID,
