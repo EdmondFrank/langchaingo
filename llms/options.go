@@ -82,6 +82,9 @@ type CallOptions struct {
 
 	// User is the user to include in the request.
 	User string `json:"params,omitempty"`
+
+	// ForceToolUse is a flag to force the use of a tool.
+	ForceToolUse bool `json:"force_tool_use,omitempty"`
 }
 
 // Tool is a tool that can be used by the model.
@@ -285,6 +288,13 @@ func WithTools(tools []Tool) CallOption {
 func WithJSONMode() CallOption {
 	return func(o *CallOptions) {
 		o.JSONMode = true
+	}
+}
+
+// WithForceToolUse will add an option to force the use of a tool.
+func WithForceToolUse() CallOption {
+	return func(o *CallOptions) {
+		o.ForceToolUse = true
 	}
 }
 
