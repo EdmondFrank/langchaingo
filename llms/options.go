@@ -89,6 +89,9 @@ type CallOptions struct {
 
 	// User is the user identifier to include in the request.
 	User string `json:"user,omitempty"`
+
+	// ForceToolUse is a flag to force the use of a tool.
+	ForceToolUse bool `json:"force_tool_use,omitempty"`
 }
 
 // Tool is a tool that can be used by the model.
@@ -329,6 +332,13 @@ func WithJSONMode() CallOption {
 	}
 }
 
+// WithForceToolUse will add an option to force the use of a tool.
+func WithForceToolUse() CallOption {
+	return func(o *CallOptions) {
+		o.ForceToolUse = true
+	}
+}
+
 // WithMetadata will add an option to set metadata to include in the request.
 // The meaning of this field is specific to the backend in use.
 func WithMetadata(metadata map[string]interface{}) CallOption {
@@ -345,7 +355,6 @@ func WithResponseMIMEType(responseMIMEType string) CallOption {
 	}
 }
 
-<<<<<<< HEAD
 // WithWebSearch enables web search for models that support it.
 // Use with OpenAI models like gpt-4o-search-preview and gpt-4o-mini-search-preview.
 // Pass nil for default web search behavior, or provide WebSearchOptions to customize.
@@ -356,34 +365,38 @@ func WithWebSearch(options *WebSearchOptions) CallOption {
 		} else {
 			o.WebSearchOptions = options
 		}
-=======
+	}
+}
+
+// WithParams will add an option to set additional parameters to include in the request.
 func WithParams(params map[string]interface{}) CallOption {
 	return func(o *CallOptions) {
 		o.Params = params
 	}
 }
 
-func WithLogitBias(logitBias []interface{})  CallOption {
+// WithLogitBias will add an option to set the logit bias for token generation.
+func WithLogitBias(logitBias []interface{}) CallOption {
 	return func(o *CallOptions) {
 		o.LogitBias = logitBias
 	}
 }
 
-func WithLogProbs(logProbs bool)  CallOption {
+// WithLogProbs will add an option to set whether to return log probabilities.
+func WithLogProbs(logProbs bool) CallOption {
 	return func(o *CallOptions) {
 		o.LogProbs = logProbs
 	}
 }
 
-func WithTopLogProbs(topLogProbs int)  CallOption {
+// WithTopLogProbs will add an option to set the number of top log probabilities to return.
+func WithTopLogProbs(topLogProbs int) CallOption {
 	return func(o *CallOptions) {
 		o.TopLogProbs = topLogProbs
 	}
 }
 
-func WithUser(user string)  CallOption {
+// WithUser will add an option to set the user identifier.
+func WithUser(user string) CallOption {
 	return func(o *CallOptions) {
 		o.User = user
->>>>>>> 6ca7e6bd (Added more llm options.)
-	}
-}
