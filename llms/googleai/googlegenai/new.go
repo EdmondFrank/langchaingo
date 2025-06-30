@@ -7,7 +7,6 @@ import (
 
 	"github.com/tmc/langchaingo/callbacks"
 	"github.com/tmc/langchaingo/llms"
-	"golang.org/x/oauth2/google"
 	"google.golang.org/genai"
 )
 
@@ -44,14 +43,14 @@ func New(ctx context.Context, opts ...Option) (*GoogleAI, error) {
 		opts: clientOptions,
 	}
 
-	var googleCredentials *google.Credentials
-	if clientOptions.Credentials.CredentialsJSON != nil {
-		var err error
-		googleCredentials, err = google.CredentialsFromJSON(ctx, clientOptions.Credentials.CredentialsJSON, clientOptions.Credentials.Scopes...)
-		if err != nil {
-			return nil, err
-		}
-	}
+	// var googleCredentials *google.Credentials
+	// if clientOptions.Credentials.CredentialsJSON != nil {
+	//	var err error
+	//	googleCredentials, err = google.CredentialsFromJSON(ctx, clientOptions.Credentials.CredentialsJSON, clientOptions.Credentials.Scopes...)
+	//	if err != nil {
+	//		return nil, err
+	//	}
+	// }
 
 	var httpOptions genai.HTTPOptions
 	if clientOptions.HTTPOPtions != nil {
