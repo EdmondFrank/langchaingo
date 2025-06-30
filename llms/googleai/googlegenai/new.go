@@ -5,11 +5,11 @@ package googlegenai
 import (
 	"context"
 
-	"cloud.google.com/go/auth"
-	"cloud.google.com/go/auth/oauth2adapt"
+	// "cloud.google.com/go/auth"
+	// "cloud.google.com/go/auth/oauth2adapt"
 	"github.com/tmc/langchaingo/callbacks"
 	"github.com/tmc/langchaingo/llms"
-	"golang.org/x/oauth2/google"
+	// "golang.org/x/oauth2/google"
 	"google.golang.org/genai"
 )
 
@@ -46,14 +46,14 @@ func New(ctx context.Context, opts ...Option) (*GoogleAI, error) {
 		opts: clientOptions,
 	}
 
-	var googleCredentials *google.Credentials
-	if clientOptions.Credentials.CredentialsJSON != nil {
-		var err error
-		googleCredentials, err = google.CredentialsFromJSON(ctx, clientOptions.Credentials.CredentialsJSON, clientOptions.Credentials.Scopes...)
-		if err != nil {
-			return nil, err
-		}
-	}
+	// var googleCredentials *google.Credentials
+	// if clientOptions.Credentials.CredentialsJSON != nil {
+	//	var err error
+	//	googleCredentials, err = google.CredentialsFromJSON(ctx, clientOptions.Credentials.CredentialsJSON, clientOptions.Credentials.Scopes...)
+	//	if err != nil {
+	//		return nil, err
+	//	}
+	// }
 
 	var httpOptions genai.HTTPOptions
 	if clientOptions.HTTPOPtions != nil {
@@ -63,13 +63,13 @@ func New(ctx context.Context, opts ...Option) (*GoogleAI, error) {
 		}
 	}
 
-	credentialOptions := &auth.CredentialsOptions{
-		TokenProvider: oauth2adapt.TokenProviderFromTokenSource(googleCredentials.TokenSource),
-		JSON:          clientOptions.Credentials.CredentialsJSON,
-	}
+	// credentialOptions := &auth.CredentialsOptions{
+	//	TokenProvider: oauth2adapt.TokenProviderFromTokenSource(googleCredentials.TokenSource),
+	//	JSON:          clientOptions.Credentials.CredentialsJSON,
+	// }
 
 	cfg := &genai.ClientConfig{
-		Credentials: auth.NewCredentials(credentialOptions),
+		// Credentials: auth.NewCredentials(credentialOptions),
 		Backend:     genai.Backend(clientOptions.APIBackend),
 		Project:     clientOptions.CloudProject,
 		Location:    clientOptions.CloudLocation,

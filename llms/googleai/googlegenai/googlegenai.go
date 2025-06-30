@@ -405,8 +405,8 @@ DoStream:
 		candidate.TokenCount = respCandidate.TokenCount
 
 		for _, part := range respCandidate.Content.Parts {
-			if ok := part.Text != ""; ok {
-				if opts.StreamingFunc(ctx, []byte(part.Text)) != nil {
+			if part != nil && part.Text != ""{
+				if opts.StreamingFunc != nil && opts.StreamingFunc(ctx, []byte(part.Text)) != nil {
 					break DoStream
 				}
 			}
