@@ -57,12 +57,10 @@ func New(ctx context.Context, opts ...Option) (*GoogleAI, error) {
 		httpOptions = genai.HTTPOptions{
 			BaseURL:    clientOptions.HTTPOPtions.BaseURL,
 			APIVersion: clientOptions.HTTPOPtions.APIVersion,
-			Timeout:    clientOptions.HTTPOPtions.Timeout,
 		}
 	}
 
 	cfg := &genai.ClientConfig{
-		Credentials: googleCredentials,
 		Backend:     genai.Backend(clientOptions.APIBackend),
 		Project:     clientOptions.CloudProject,
 		Location:    clientOptions.CloudLocation,

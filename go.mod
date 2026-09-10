@@ -227,7 +227,7 @@ require (
 	golang.org/x/exp v0.0.0-20230713183714-613f0c0eb8a1
 	golang.org/x/tools v0.21.1-0.20240508182429-e35e4ccd0d2d
 	google.golang.org/api v0.197.0
-	google.golang.org/genai v0.2.0
+	google.golang.org/genai v1.7.0
 	google.golang.org/grpc v1.66.2
 	google.golang.org/protobuf v1.34.2
 	sigs.k8s.io/yaml v1.3.0

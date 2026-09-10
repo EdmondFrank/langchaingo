@@ -59,17 +59,18 @@ func (g *GoogleAI) GenerateContent(
 		opt(&opts)
 	}
 
-	topK := float64(opts.TopK)
-	candidateCount := int64(opts.CandidateCount)
-	maxtokens := int64(opts.MaxTokens)
-	seed := int64(opts.Seed)
+	temperature := float32(opts.Temperature)
+	topK := float32(opts.TopK)
+	candidateCount := int32(opts.CandidateCount)
+	maxtokens := int32(opts.MaxTokens)
+	seed := int32(opts.Seed)
 	config := &genai.GenerateContentConfig{
 		SystemInstruction: nil,
-		Temperature:       &opts.Temperature,
+		Temperature:       &temperature,
 		TopP:              nil,
 		TopK:              &topK,
-		CandidateCount:    &candidateCount,
-		MaxOutputTokens:   &maxtokens,
+		CandidateCount:    candidateCount,
+		MaxOutputTokens:   maxtokens,
 		StopSequences:     opts.StopWords,
 		ResponseLogprobs:  false,
 		Logprobs:          nil,
@@ -151,15 +152,15 @@ func (g *GoogleAI) GenerateImage(
 		opt(&opts)
 	}
 
-	var numberOfImages int64 = 1
+	var numberOfImages int32 = 1
 	numberOfImagesI, ok := opts.Metadata["number_of_images"]
 	if ok {
-		numberOfImages = numberOfImagesI.(int64)
+		numberOfImages = int32(numberOfImagesI.(int64))
 	}
 
-	var seed int64 = int64(opts.Seed)
+	var seed int32 = int32(opts.Seed)
 	config := &genai.GenerateImagesConfig{
-		NumberOfImages: &numberOfImages,
+		NumberOfImages: numberOfImages,
 		Seed:           &seed,
 		OutputMIMEType: opts.ResponseMIMEType,
 	}
