@@ -92,6 +92,12 @@ type CallOptions struct {
 
 	// ForceToolUse is a flag to force the use of a tool.
 	ForceToolUse bool `json:"force_tool_use,omitempty"`
+
+	// ExtraBody holds non-standard parameters that backends accept in the
+	// request body, such as "chat_template_kwargs" for vLLM-hosted Qwen models.
+	// Backends that support it merge these keys into the top level of the body;
+	// it is never serialized as a nested "extra_body" object itself.
+	ExtraBody map[string]interface{} `json:"-"`
 }
 
 // Tool is a tool that can be used by the model.
@@ -400,3 +406,21 @@ func WithTopLogProbs(topLogProbs int) CallOption {
 func WithUser(user string) CallOption {
 	return func(o *CallOptions) {
 		o.User = user
+	}
+}
+
+// WithExtraBody will add an option to set non-standard provider parameters that
+// are merged into the top level of the JSON request body, mirroring the
+// `extra_body` argument of the OpenAI Python client.
+//
+// It is intended for fields the OpenAI-compatible schema does not define, e.g.
+// vLLM/SGLang chat template kwargs:
+//
+//	llms.WithExtraBody(map[string]any{
+//		"chat_template_kwargs": map[string]any{"enable_thinking": false},
+//	})
+func WithExtraBody(extraBody map[string]interface{}) CallOption {
+	return func(o *CallOptions) {
+		o.ExtraBody = extraBody
+	}
+}
